@@ -1,0 +1,26 @@
+Times:
+
+Sorted 10k:
+    bubble: 0.246s
+    selection: 0.278s
+    insertion: 0.126s
+
+Sorted 100k
+    bubble: 14.806s
+    selection: 16.375s
+    insertion: 1.328s
+
+Unsorted 1k:
+    bubble: 0.008s
+    selection: 0.009s
+    insertion: 0.009s
+
+Unsorted 10k:
+    bubble: 0.355s
+    selection: 0.275s
+    insertion: 0.261s
+
+Unsorted 100k:
+    bubble: 45.669s
+    selection: 16.763s
+    insertion: 16.356
