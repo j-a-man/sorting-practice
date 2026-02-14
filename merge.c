@@ -6,9 +6,8 @@
 #include <stdlib.h>
 
 void merge(int *A, int p, int q, int r) {
-    int i, j, k;
     
-    printf("P: %d\nQ: %d\nR: %d\n",p,q,r);
+    //printf("P: %d\nQ: %d\nR: %d\n",p,q,r);
 
     int nL = q-p+1;
     int nR = r-q;
@@ -16,10 +15,10 @@ void merge(int *A, int p, int q, int r) {
     int L[nL];
     int R[nR];
 
-    for (i = 0; i < nL; i++) {
+    for (int i = 0; i < nL; i++) {
         L[i] = A[p+i];
     }
-    for (j = 0; j < nR; j++) {
+    for (int j = 0; j < nR; j++) {
         R[j] = A[q+1+j];
     }
 
@@ -38,12 +37,12 @@ void merge(int *A, int p, int q, int r) {
 
 
 
-    i = 0;
-    j = 0;
-    k = p;
+    int i = 0;
+    int j = 0;
+    int k = p;
 
     while ((i < nL) && (j < nR)) {
-        if (L[i] <= R[i]) {
+        if (L[i] <= R[j]) {
             A[k] = L[i];
             i+=1;
         }
@@ -80,7 +79,7 @@ void merge_sort(int *A, int p, int r) {
     //printf("break\n");
     
 
-    int q = (p+r)/2;
+    int q = ((p+r)/2);
     merge_sort(A, p, q);
     merge_sort(A, q+1, r);
 
