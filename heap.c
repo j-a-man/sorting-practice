@@ -60,13 +60,14 @@ int main(int argc, char *argv[]) {
     fp = fopen(argv[1], "r");
     fscanf(fp, "%d", &n);
 
-    int data[n];
+    int *data = malloc(n * sizeof(int));
     for (int i = 0; i < n; ++i) {
         fscanf(fp, "%d", &data[i]);
     }
 
     heap_sort(data, n);
     print(n, data);
+    free(data);
 
     return 0;
 }
