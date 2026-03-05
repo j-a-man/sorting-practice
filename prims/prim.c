@@ -105,7 +105,6 @@ int calc_mst(int *cost, int *previous, int n) {
     int total = 0;
     for (int i = 0; i < n; ++i) {
         if (previous[i] != -1) {
-            printf("edge: %d -> %d, cost: %d\n", previous[i], i, cost[i]);
             total += cost[i];
         }
     }
@@ -177,11 +176,9 @@ int main(int argc, char *argv[]) {
     // gets the # of vertices
     fp = fopen(argv[1], "r");
     fscanf(fp, "%d", &num_v);
-    printf("number of vertices: %d\n", num_v);
 
     // gets the # of edges
     fscanf(fp, "%d", &num_e);
-    printf("number of edges: %d\n", num_e);
 
     graph g;
     g.num_vertices = num_v;
@@ -199,15 +196,8 @@ int main(int argc, char *argv[]) {
         int w;
         
         fscanf(fp, "%d", &u);
-        printf("%d ", u);
-
-
         fscanf(fp, "%d", &v);
-        printf("%d ", v);
-
-
         fscanf(fp, "%d", &w);
-        printf("%d\n", w);
 
         edge *e1 = malloc(sizeof(edge));
         e1->dest = v;
@@ -225,6 +215,6 @@ int main(int argc, char *argv[]) {
     
 
     int mst = prim(&g, 0);
-    printf("The MST is: %d\n", mst);
+    printf("%d\n", mst);
     return 0;
 }
