@@ -195,9 +195,7 @@ int main(int argc, char *argv[]) {
         int v;
         int w;
         
-        fscanf(fp, "%d", &u);
-        fscanf(fp, "%d", &v);
-        fscanf(fp, "%d", &w);
+        fscanf(fp, "%d %d %d", &u, &v, &w);
 
         edge *e1 = malloc(sizeof(edge));
         e1->dest = v;
