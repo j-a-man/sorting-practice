@@ -2,12 +2,14 @@
 #include <stdio.h>
 #include <limits.h>
 
+//represents an individual edge in the graph
 typedef struct edge {
     int dest;
     int weight;
     struct edge *next;
 } edge;
 
+//the overall structure of the graph representation
 typedef struct {
     edge **adj;
     int *parent;
@@ -15,11 +17,13 @@ typedef struct {
     int num_vertices;
 } graph;
 
+//represents an individual element in the heap
 typedef struct {
     int key;
     int value;
 } heap_element;
 
+//the overall structure of the heap
 typedef struct {
     int capacity;
     int size;
@@ -27,10 +31,12 @@ typedef struct {
     int *index;
 } heap;
 
+//easy access to find parent, left, right in heap
 #define LEFT(i) ((i<<1)+1)
 #define RIGHT(i) ((i<<1)+2)
 #define PARENT(i) ((i-1)>>1)
 
+//swaps two different heap elements
 void heap_swap(heap *h, int i, int j) {
     heap_element h1 = h->data[i];
     h->data[i] = h->data[j];
@@ -40,6 +46,7 @@ void heap_swap(heap *h, int i, int j) {
     h->index[h->data[j].key] = j;
 }
 
+//initializes the heap
 heap *createHeap(int capacity) {
     heap *h = malloc(sizeof(heap));
     h->size = 0;
@@ -52,6 +59,7 @@ heap *createHeap(int capacity) {
     return h;
 }
 
+//initializes a new element in the heap
 heap_element *newHeapElement(int i, int dist) {
     heap_element *e3 = malloc(sizeof(heap_element));
     e3->key = i;
@@ -59,6 +67,7 @@ heap_element *newHeapElement(int i, int dist) {
     return e3;
 }
 
+// swaps elements to maintain the min-heap property
 void perc_up(heap *h, int i) {
     if (i == 0) {
         return;
@@ -70,12 +79,15 @@ void perc_up(heap *h, int i) {
     }
 }
 
+//reduces value of specific node and restores heap's properties
 void heap_decrease_key(heap *h, int key, int new_value) {
     int i = h->index[key];
     h->data[i].value = new_value;
     perc_up(h,i);
 }
 
+
+//inserts an element in the heap and calls perc_up to adjust where needed
 void heap_insert(heap *h, int vertex, int dist) {
     if (h->size >= h->capacity) {
         return;
@@ -88,6 +100,7 @@ void heap_insert(heap *h, int vertex, int dist) {
     perc_up(h,h->size-1);
 }
 
+//moves an element down appropriately in heap
 void perc_down(heap *h, int i) {
     int smallest = i;
 
@@ -103,6 +116,7 @@ void perc_down(heap *h, int i) {
     }
 }
 
+//takes out the top element in the heap
 int heap_extract_min(heap *h) {
     if (h->size == 0) {
         return -1;
@@ -118,6 +132,7 @@ int heap_extract_min(heap *h) {
     return rv;
 }
 
+//starts from the top most parent and prints downwards
 void printPath(int *parent, int j) {
     if (parent[j] == -1) {
         printf("%d ", j);
@@ -132,6 +147,7 @@ void dijkstra(graph *g, int start, int end) {
     int n = g->num_vertices;
     heap *h = createHeap(n);
 
+    //set to infinity
     for (int i = 0; i < n; ++i) {
         g->dist[i] = 999999;
         g->parent[i] = -1;
@@ -139,9 +155,9 @@ void dijkstra(graph *g, int start, int end) {
     }
 
     g->dist[start] = 0;
-    heap_decrease_key(h, start, 0);
+    heap_decrease_key(h, start, 0); // update heap to reflect changes
 
-    while (h->size > 0) {
+    while (h->size > 0) { // run until heap is empty
         int u = heap_extract_min(h);
         if (g->dist[u] == 999999) {
             break;
@@ -151,7 +167,7 @@ void dijkstra(graph *g, int start, int end) {
             int v = curr->dest;
             int weight = curr->weight;
 
-            if (h->index[v] != -1 && g->dist[u] + weight < g->dist[v]) {
+            if (h->index[v] != -1 && g->dist[u] + weight < g->dist[v]) { // updates distance if shorter path is found
                 g->dist[v] = g->dist[u] + weight;
                 g->parent[v] = u;
                 heap_decrease_key(h, v, g->dist[v]);
@@ -161,7 +177,7 @@ void dijkstra(graph *g, int start, int end) {
     }
 
     if (g->dist[end] >= 999999) {
-        printf("not connected\n");
+        printf("not connected\n"); // checks to see if graph is connected
     }
     else {
         printf("Distance:  %d\n", g->dist[end]);
@@ -175,22 +191,24 @@ void dijkstra(graph *g, int start, int end) {
 
 
 int main(int argc, char *argv[]) {
-    int num_e;
-    int num_v;
-    int start;
-    int end;
+    int num_e; // number of edges
+    int num_v; // number of vertices
+    int start; // start vertex
+    int end; // end vertex
     
     if (argc < 3) {
         printf("Not enough arguments, try again.\n");
         return 1;
     }
 
+    // converts to int
     start = atoi(argv[1]);
     end = atoi(argv[2]);
 
     scanf("%d", &num_v);
     scanf("%d", &num_e);
 
+    // allocate the necessary space in the struct
     graph g;
     g.num_vertices = num_v;
     g.adj = malloc(num_v*sizeof(edge *));
@@ -201,6 +219,7 @@ int main(int argc, char *argv[]) {
         g.adj[i] = NULL;
     }
 
+    // based on input update
     for (int i = 0; i < num_e; ++i) {
         int u;
         int v;
@@ -217,6 +236,7 @@ int main(int argc, char *argv[]) {
         g.adj[u] = e1;
     }
 
+    // call dijkstra
     dijkstra(&g, start, end);
 
 
