@@ -16,29 +16,29 @@ HEADERS = quick.h huffman.h bin_search.h heap.h merge.h bubble.h selection.h ins
 
 all: quick huffman bin_search heap merge bubble selection insertion
 
-quick: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o quick main.o $(OBJS)
+quick: $(OBJS)
+	$(CC) $(CFLAGS) -o quick $(OBJS)
 
-huffman: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o huffman main.o $(OBJS)
+huffman: $(OBJS)
+	$(CC) $(CFLAGS) -o huffman $(OBJS)
 
-bin_search: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o bin_search main.o $(OBJS)
+bin_search: $(OBJS)
+	$(CC) $(CFLAGS) -o bin_search $(OBJS)
 
-heap: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o heap main.o $(OBJS)
+heap: $(OBJS)
+	$(CC) $(CFLAGS) -o heap $(OBJS)
 
-merge: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o merge main.o $(OBJS)
+merge: $(OBJS)
+	$(CC) $(CFLAGS) -o merge $(OBJS)
 
-bubble: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o bubble main.o $(OBJS)
+bubble: $(OBJS)
+	$(CC) $(CFLAGS) -o bubble $(OBJS)
 
-selection: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o selection main.o $(OBJS)
+selection: selection.c
+	$(CC) $(CFLAGS) selection.c -o selection
 
-insertion: main.o $(OBJS)
-	$(CC) $(CFLAGS) -o insertion main.o $(OBJS)
+insertion: $(OBJS)
+	$(CC) $(CFLAGS) -o insertion $(OBJS)
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@

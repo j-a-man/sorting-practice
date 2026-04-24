@@ -1,6 +1,7 @@
 /// Selection sort.
 // Big-O(n^2) and Omega(n^2)
 #include <stdio.h>
+#include <stdlib.h>
 
 void selection_sort(int n, int *data) {
   for (int i = 0; i < n; ++i) {
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
   fp = fopen(argv[1], "r");
   fscanf(fp, "%d", &n);
 
-  int data[n];
+  int *data = malloc(n*sizeof(int));
   for (int i = 0; i < n; ++i)
     fscanf(fp, "%d", &data[i]);
 
